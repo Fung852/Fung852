@@ -13,10 +13,10 @@ while True:
     cv2.rectangle(img, (x, y), (x + 50, y + 50), (0, 0, 255), 2)
     x = x + dx
     y = y + dy
-    if x>=590 or x <= 0:
+    if x >= 590 or x <= 0:
         dx=dx*(-1)
-    if y>=430 or y <= 0:
-        dy=dy*(-1)
+    if y >= 430 or y <= 0:
+        dy = dy*(-1)
     cv2.imshow('Frame', img)
     if cv2.waitKey(20) & 0xff == ord('q'):
         break
