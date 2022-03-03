@@ -10,6 +10,7 @@ dy = 1
 
 while True:
     success, img = capture.read()
+    cv2.putText(img, "Tse Ming Fung",(205,220), cv2.FONT_HERSHEY_PLAIN,1.5,(0,0,255),2)
     cv2.rectangle(img, (x, y), (x + 50, y + 50), (0, 0, 255), 2)
     x = x + dx
     y = y + dy
