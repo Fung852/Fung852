@@ -10,13 +10,13 @@ dy = 1
 
 while True:
     success, img = capture.read()
-    cv2.putText(img, "MBS3523 Assignment 1b – Q3 Name: Tse Ming Fung",(20,0), cv2.FONT_HERSHEY_PLAIN,1.5,(0,0,255),2)
-    cv2.rectangle(img, (x, y), (x + 50, y + 50), (0, 0, 255), 2)
+    cv2.putText(img, "MBS3523 Assignment 1b-Q3 Name: Tse Ming Fung",(70,20), cv2.FONT_HERSHEY_PLAIN,1.2,(255,0,255),2)
+    cv2.rectangle(img, (x, y), (x + 80, y + 80), (0, 255, 255), 5)
     x = x + dx
     y = y + dy
-    if x >= 590 or x <= 0:
+    if x >= 560 or x <= 0:
         dx=dx*(-1)
-    if y >= 430 or y <= 0:
+    if y >= 400 or y <= 0:
         dy = dy*(-1)
     cv2.imshow('Frame', img)
     if cv2.waitKey(20) & 0xff == ord('q'):
@@ -24,3 +24,4 @@ while True:
 
 capture.release()
 cv2.destroyAllWindows()
+
