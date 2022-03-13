@@ -15,7 +15,8 @@ while True:
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
         roiImg = img[y:y + h, x:x + w].copy()
         imgGray[y:y + h, x:x + w] = roiImg
-    cv2.imshow('Frame', img)
+    cv2.putText(imgGray, "MBS3523 Assignment 1c-Q4 Name: Tse Ming Fung", (30, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7,(255, 0, 255), 2)
+    cv2.imshow('Webcam', imgGray)
     if cv2.waitKey(20) & 0xff == ord('q'):
         break
 capture.release()
