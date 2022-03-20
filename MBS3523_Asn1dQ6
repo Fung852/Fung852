@@ -14,20 +14,20 @@ def draw_box(event, x, y, flags, param):
     if event == cv2.EVENT_RBUTTONUP:
         EVT = event
         print(event)
-cv2.namedWindow('MBS3523')
-cv2.setMouseCallback('MBS3523', draw_box)
+cv2.namedWindow('MBS3523_ANS1dQ6')
+cv2.setMouseCallback('MBS3523_ANS1dQ6', draw_box)
 cam = cv2.VideoCapture(0)
 while True:
     success, img = cam.read()
     if EVT == 4:
         cv2.rectangle(img, PNT1, PNT2, (0, 255, 255), 3)
         imgROI = img[PNT1[1]:PNT2[1], PNT1[0]:PNT2[0]]
-        cv2.imshow('img ROI', imgROI)
+        cv2.imshow('MBS3523_ANS1dQ5_ROI', imgROI)
     if EVT == 5:
         img[:, :] = img
-        cv2.destroyWindow('img ROI')
+        cv2.destroyWindow('MBS3523_ANS1dQ5_ROI')
         EVT = 0
-    cv2.imshow('MBS3523', img)
+    cv2.imshow('MBS3523_ANS1dQ6', img)
 
     if cv2.waitKey(5) & 0xFF == 27:
         break
