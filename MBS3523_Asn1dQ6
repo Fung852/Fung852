@@ -1,35 +1,34 @@
 import cv2
 import numpy as np
-
 EVT = 0
-def draw_box(event,x,y,flags,param):
+def draw_box(event, x, y, flags, param):
     global EVT
     global PNT1
     global PNT2
     if event == cv2.EVENT_LBUTTONDOWN:
         EVT = event
-        PNT1 = (x,y)
+        PNT1 = (x, y)
     if event == cv2.EVENT_LBUTTONUP:
         EVT = event
-        PNT2 = (x,y)
+        PNT2 = (x, y)
     if event == cv2.EVENT_RBUTTONUP:
         EVT = event
         print(event)
 cv2.namedWindow('MBS3523')
-cv2.setMouseCallback('MBS3523',draw_box)
+cv2.setMouseCallback('MBS3523', draw_box)
 cam = cv2.VideoCapture(0)
 while True:
-    success,img = cam.read()
+    success, img = cam.read()
     if EVT == 4:
-        cv2.rectangle(img,PNT1,PNT2,(0,255,255),2)
-        imgROI = img[PNT1[1]:PNT2[1],PNT1[0],PNT2[0]]
-        cv2.imshow('img ROI',imgROI)
+        cv2.rectangle(img, PNT1, PNT2, (0, 255, 255), 3)
+        imgROI = img[PNT1[1]:PNT2[1], PNT1[0]:PNT2[0]]
+        cv2.imshow('img ROI', imgROI)
     if EVT == 5:
-        img[:,:]=img
+        img[:, :] = img
         cv2.destroyWindow('img ROI')
         EVT = 0
-    cv2.imshow('MBS3523',img)
-    
+    cv2.imshow('MBS3523', img)
+
     if cv2.waitKey(5) & 0xFF == 27:
         break
 cv2.destroyAllWindows()
