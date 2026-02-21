@@ -47,6 +47,13 @@
     background: #0f766e;
 }
 
+.login-hint {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+}
+
 .admin-page {
     min-height: 100vh;
     background: #f8fafc;

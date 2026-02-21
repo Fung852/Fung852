@@ -23,6 +23,8 @@ app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), (req
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
+app.get('/api/health', (req, res) => res.json({ ok: true }));
+
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/payment', paymentRouter);

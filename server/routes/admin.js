@@ -35,13 +35,14 @@ function authMiddleware(req, res, next) {
 
 // 登录
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const username = (req.body?.username || '').toString().trim();
+  const password = (req.body?.password || '').toString();
   if (!username || !password) {
-    return res.status(400).json({ error: '请输入用户名和密码' });
+    return res.status(400).json({ error: '請輸入使用者名稱和密碼' });
   }
   const hash = crypto.createHash('sha256').update(password).digest('hex');
   const user = db.prepare('SELECT * FROM admin_users WHERE username = ? AND password_hash = ?').get(username, hash);
-  if (!user) return res.status(401).json({ error: '用户名或密码错误' });
+  if (!user) return res.status(401).json({ error: '使用者名稱或密碼錯誤（預設：admin / admin123）' });
   const token = createToken(username);
   res.json({ token, username });
 });

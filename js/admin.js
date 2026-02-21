@@ -137,18 +137,38 @@ document.getElementById('filterStatus')?.addEventListener('change', loadBookings
 document.getElementById('filterDateFrom')?.addEventListener('change', loadBookings);
 document.getElementById('filterDateTo')?.addEventListener('change', loadBookings);
 
-// 初始化
-if (token) {
-  api('/admin/bookings')
-    .then(() => {
-      showPage('admin');
-      loadBookings();
-    })
-    .catch(() => {
-      token = null;
-      localStorage.removeItem('admin_token');
-      showPage('login');
-    });
-} else {
-  showPage('login');
+// 檢查後端是否可用
+async function checkBackend() {
+  try {
+    const r = await fetch(window.location.origin + '/api/health');
+    const text = await r.text();
+    JSON.parse(text);
+    return true;
+  } catch {
+    return false;
+  }
 }
+
+// 初始化
+(async () => {
+  const hasBackend = await checkBackend();
+  const hint = document.querySelector('.login-hint');
+  if (hint && !hasBackend) {
+    hint.textContent = '後端未啟動或無法連線。請在本機執行 npm start 後再試。管理後台需後端才能使用。';
+    hint.style.color = '#dc2626';
+  }
+  if (token && hasBackend) {
+    api('/admin/bookings')
+      .then(() => {
+        showPage('admin');
+        loadBookings();
+      })
+      .catch(() => {
+        token = null;
+        localStorage.removeItem('admin_token');
+        showPage('login');
+      });
+  } else {
+    showPage('login');
+  }
+})();
