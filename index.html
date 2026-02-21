@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CWS 專業冷氣清洗維修 | 快來洗 Chill Wash Services</title>
+    <link rel="canonical" href="https://www.chillwashservice.com/" id="canonical">
+    <meta property="og:url" content="https://www.chillwashservice.com/" id="og-url">
+    <meta property="og:title" content="CWS 快來洗 Chill Wash Services - 專業冷氣清洗維修">
+    <script src="js/config.js"></script>
+    <script>
+      if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.siteUrl) {
+        var c = document.getElementById('canonical'); if (c) c.href = SITE_CONFIG.siteUrl + '/';
+        var o = document.getElementById('og-url'); if (o) o.content = SITE_CONFIG.siteUrl + '/';
+      }
+    </script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +23,7 @@
     <!-- 导航栏 -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo">快來洗 <span class="logo-en">Chill Wash Services</span></a>
+            <a href="/" class="logo">快來洗 <span class="logo-en">Chill Wash Services</span></a>
             <ul class="nav-links">
                 <li><a href="#home">首頁</a></li>
                 <li><a href="#services">服務項目</a></li>
@@ -169,7 +179,6 @@
         </div>
     </footer>
 
-    <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

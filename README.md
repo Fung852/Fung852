@@ -103,8 +103,9 @@ NOTIFY_EMAIL=admin@example.com  # 新预约通知到此邮箱
 
 ## 自定义配置
 
+- **網站網址**：在 `js/config.js` 修改 `siteUrl`（預設 https://www.chillwashservice.com）
 - **公司名稱**：快來洗 Chill Wash Services
-- **聯絡方式**：修改「聯繫我們」區塊
+- **聯絡方式**：在 `js/config.js` 修改 WhatsApp、服務時間、地址
 - **服務價格**：在 `server/routes/payment.js` 的 `SERVICE_PRICES` 中調整（預設 $500/台）
 - **配色**：在 `css/styles.css` 的 `:root` 中修改
 
