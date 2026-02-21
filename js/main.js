@@ -6,7 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initDatePicker();
     initBookingForm();
+    initContactFromConfig();
 });
+
+function initContactFromConfig() {
+    if (typeof SITE_CONFIG === 'undefined') return;
+    const wa = document.getElementById('contactWhatsApp');
+    if (wa) {
+        wa.href = SITE_CONFIG.whatsappLink || wa.href;
+        wa.textContent = SITE_CONFIG.whatsapp || wa.textContent;
+    }
+    const addr = document.getElementById('contactAddress');
+    if (addr) addr.textContent = SITE_CONFIG.address || addr.textContent;
+    const hours = document.getElementById('contactHours');
+    if (hours) hours.textContent = SITE_CONFIG.serviceHours || hours.textContent;
+}
 
 // 移动端菜单
 function initMobileMenu() {
@@ -117,7 +131,10 @@ function submitViaWhatsApp(data) {
 日期：${data.date} ${data.time}
 地址：${data.address}
 ${data.notes ? '備註：' + data.notes : ''}`;
-    const url = 'https://wa.me/85261581857?text=' + encodeURIComponent(msg);
+    const waNum = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.whatsapp)
+    ? SITE_CONFIG.whatsapp.replace(/\D/g, '')
+    : '85261581857';
+    const url = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg);
     window.open(url, '_blank');
     // 仍顯示成功區塊，提示用戶已開啟 WhatsApp
     document.getElementById('bookingForm').style.display = 'none';
