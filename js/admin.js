@@ -5,8 +5,8 @@ const API_BASE = window.location.origin + '/api';
 
 let token = localStorage.getItem('admin_token');
 
-const SERVICE_NAMES = { home: '家用', commercial: '商用', maintenance: '保养' };
-const STATUS_NAMES = { pending: '待确认', confirmed: '已确认', completed: '已完成', cancelled: '已取消' };
+const SERVICE_NAMES = { home: '家用', commercial: '商用', maintenance: '保養' };
+const STATUS_NAMES = { pending: '待確認', confirmed: '已確認', completed: '已完成', cancelled: '已取消' };
 
 function showPage(page) {
   document.getElementById('loginPage').style.display = page === 'login' ? 'flex' : 'none';
@@ -19,7 +19,7 @@ function api(path, options = {}) {
   if (token) headers['Authorization'] = 'Bearer ' + token;
   return fetch(url, { ...options, headers }).then(async (r) => {
     const data = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(data.error || '请求失败');
+    if (!r.ok) throw new Error(data.error || '請求失敗');
     return data;
   });
 }
@@ -82,12 +82,12 @@ function renderBookings(list) {
       <td>${b.address}</td>
       <td><span class="status-badge status-${b.status}">${STATUS_NAMES[b.status] || b.status}</span></td>
       <td class="${b.payment_status === 'paid' ? 'payment-paid' : 'payment-unpaid'}">${b.payment_status === 'paid' ? '已支付' : '未支付'}</td>
-      <td><button class="btn-edit" data-id="${b.id}">编辑</button></td>
+      <td><button class="btn-edit" data-id="${b.id}">編輯</button></td>
     </tr>
   `
         )
         .join('')
-    : '<tr><td colspan="10" style="text-align:center;padding:40px;">暂无预约</td></tr>';
+    : '<tr><td colspan="10" style="text-align:center;padding:40px;">暫無預約</td></tr>';
 
   tbody.querySelectorAll('.btn-edit').forEach((btn) => {
     btn.addEventListener('click', () => openEditModal(btn.dataset.id));

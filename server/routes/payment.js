@@ -8,9 +8,9 @@ const db = require('../db');
 const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STRIPE_SECRET_KEY) : null;
 
 const SERVICE_PRICES = {
-  home: 19900,      // 199 元
-  commercial: 59900,
-  maintenance: 39900,
+  home: 50000,      // 500 元/台
+  commercial: 50000,
+  maintenance: 50000,
 };
 
 // 创建支付 intent
@@ -28,9 +28,9 @@ router.post('/create-intent', async (req, res) => {
     const amt = amount || (bookingId ? (() => {
       const b = db.prepare('SELECT service, units FROM bookings WHERE id = ?').get(bookingId);
       if (!b) return null;
-      const base = SERVICE_PRICES[b.service] || 19900;
+      const base = SERVICE_PRICES[b.service] || 50000;
       return base * (b.units || 1);
-    })() : 19900);
+    })() : 50000);
 
     if (!amt) return res.status(400).json({ error: '无效的预约或金额' });
 

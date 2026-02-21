@@ -1,45 +1,46 @@
-# 清风空调清洗 - 预约系统
+# 快來洗 Chill Wash Services - 預約系統
 
-专业空调清洗服务在线预约系统，含前端预约、后端 API、管理后台、通知与支付集成。
+專業冷氣清洗服務線上預約系統，含前端預約、後端 API、管理後台、通知與支付整合。
 
-## 功能特点
+## 功能特點
 
-- **前端预约**：服务展示、在线预约表单、响应式设计
-- **后端 API**：预约数据写入 SQLite 数据库
-- **管理后台**：查看工单、筛选、更新状态、指派技师、支付状态
-- **通知**：邮件通知（SMTP）、短信占位（可对接阿里云/腾讯云）
-- **支付**：Stripe 在线支付（可选配置）
+- **前端預約**：服務展示、線上預約表單、響應式設計
+- **後端 API**：預約資料寫入 SQLite 資料庫
+- **管理後台**：查看工單、篩選、更新狀態、指派技師、支付狀態
+- **通知**：郵件通知（SMTP）、簡訊佔位（可對接阿里雲/騰訊雲）
+- **支付**：Stripe 線上支付（可選配置）
+- **價格**：每台冷氣 $500
 
-## 快速开始
+## 快速開始
 
-### 1. 安装依赖
+### 1. 安裝依賴
 
 ```bash
 npm install
 ```
 
-### 2. 配置环境变量（可选）
+### 2. 設定環境變數（可選）
 
 ```bash
 cp .env.example .env
-# 编辑 .env 配置邮件、支付等
+# 編輯 .env 設定郵件、支付等
 ```
 
-### 3. 启动服务
+### 3. 啟動服務
 
 ```bash
 npm start
 ```
 
-访问：
-- 预约网站：http://localhost:3000
-- 管理后台：http://localhost:3000/admin.html（默认账号 admin / admin123）
+存取：
+- 預約網站：http://localhost:3000
+- 管理後台：http://localhost:3000/admin.html（預設帳號 admin / admin123）
 
-## 项目结构
+## 專案結構
 
 ```
-├── index.html          # 预约首页
-├── admin.html          # 管理后台
+├── index.html          # 預約首頁
+├── admin.html          # 管理後台
 ├── css/
 │   ├── styles.css      # 主站样式
 │   └── admin.css       # 后台样式
@@ -102,9 +103,9 @@ NOTIFY_EMAIL=admin@example.com  # 新预约通知到此邮箱
 
 ## 自定义配置
 
-- **公司名称**：在 `index.html` 中搜索「清风空调清洗」替换
-- **联系方式**：修改「联系我们」区块
-- **服务价格**：在 `server/routes/payment.js` 的 `SERVICE_PRICES` 中调整
+- **公司名稱**：快來洗 Chill Wash Services
+- **聯絡方式**：修改「聯繫我們」區塊
+- **服務價格**：在 `server/routes/payment.js` 的 `SERVICE_PRICES` 中調整（預設 $500/台）
 - **配色**：在 `css/styles.css` 的 `:root` 中修改
 
 ## 许可证

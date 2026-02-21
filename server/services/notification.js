@@ -4,9 +4,9 @@
 const nodemailer = require('nodemailer');
 
 const SERVICE_NAMES = {
-  home: '家用空调清洗',
-  commercial: '商用空调清洗',
-  maintenance: '空调保养套餐',
+  home: '家用冷氣清洗',
+  commercial: '商用冷氣清洗',
+  maintenance: '冷氣保養套餐',
 };
 
 // 邮件配置 (需在 .env 中设置)
@@ -49,20 +49,20 @@ async function sendBookingConfirmation(booking) {
   // 邮件通知 (如有配置邮箱)
   if (process.env.NOTIFY_EMAIL) {
     const html = `
-      <h2>新预约通知</h2>
-      <p><strong>客户:</strong> ${booking.name}</p>
-      <p><strong>电话:</strong> ${booking.phone}</p>
-      <p><strong>服务:</strong> ${serviceName}</p>
-      <p><strong>数量:</strong> ${booking.units} 台</p>
+      <h2>新預約通知</h2>
+      <p><strong>客戶:</strong> ${booking.name}</p>
+      <p><strong>電話:</strong> ${booking.phone}</p>
+      <p><strong>服務:</strong> ${serviceName}</p>
+      <p><strong>數量:</strong> ${booking.units} 台</p>
       <p><strong>日期:</strong> ${booking.date} ${booking.time}</p>
       <p><strong>地址:</strong> ${booking.address}</p>
-      ${booking.notes ? `<p><strong>备注:</strong> ${booking.notes}</p>` : ''}
+      ${booking.notes ? `<p><strong>備註:</strong> ${booking.notes}</p>` : ''}
     `;
-    await sendEmail(process.env.NOTIFY_EMAIL, `新预约 - ${booking.name}`, html);
+    await sendEmail(process.env.NOTIFY_EMAIL, `新預約 - ${booking.name}`, html);
   }
 
   // 短信通知客户 (需配置 SMS_API_KEY)
-  const smsContent = `【清风空调清洗】您已成功预约${serviceName}，服务日期${booking.date} ${booking.time}。我们将尽快与您确认，感谢！`;
+  const smsContent = `【快來洗 Chill Wash Services】您已成功預約${serviceName}，服務日期${booking.date} ${booking.time}。我們將儘快與您確認，感謝！`;
   await sendSMS(booking.phone, smsContent);
 }
 

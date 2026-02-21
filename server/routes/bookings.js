@@ -11,12 +11,12 @@ router.post('/', async (req, res) => {
     const { name, phone, service, units, date, time, address, notes } = req.body;
 
     if (!name?.trim() || !phone?.trim() || !service || !date || !time || !address?.trim()) {
-      return res.status(400).json({ error: '请填写所有必填项' });
+      return res.status(400).json({ error: '請填寫所有必填欄位' });
     }
 
-    const phoneRegex = /^1[3-9]\d{9}$/;
-    if (!phoneRegex.test(phone.trim())) {
-      return res.status(400).json({ error: '请输入正确的手机号码' });
+    const phoneRegex = /^(\d{8,11}|09\d{8})$/;
+    if (!phoneRegex.test(phone.trim().replace(/\s/g, ''))) {
+      return res.status(400).json({ error: '請輸入正確的聯絡電話' });
     }
 
     const stmt = db.prepare(`
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     res.status(201).json({ success: true, booking });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: '预约提交失败' });
+    res.status(500).json({ error: '預約提交失敗' });
   }
 });
 

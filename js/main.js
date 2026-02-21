@@ -1,5 +1,5 @@
 /**
- * 清风空调清洗 - 预约网站交互逻辑
+ * 快來洗 Chill Wash Services - 預約網站互動邏輯
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,16 +45,18 @@ function initBookingForm() {
 
         // 简单验证
         if (!data.name?.trim() || !data.phone?.trim() || !data.service || !data.date || !data.time || !data.address?.trim()) {
-            alert('请填写所有必填项');
+            alert('請填寫所有必填欄位');
             return;
         }
 
-        // 手机号简单验证
-        const phoneRegex = /^1[3-9]\d{9}$/;
-        if (!phoneRegex.test(data.phone.trim())) {
-            alert('请输入正确的手机号码');
+        // 電話格式驗證（支援台灣、香港、大陸）
+        const phone = data.phone.trim().replace(/\s/g, '');
+        const phoneRegex = /^(\d{8,11}|09\d{8})$/;
+        if (!phoneRegex.test(phone)) {
+            alert('請輸入正確的聯絡電話');
             return;
         }
+        data.phone = phone;
 
         // 显示加载状态
         const submitBtn = form.querySelector('.submit-btn');
@@ -81,7 +83,7 @@ function initBookingForm() {
                 showPaymentOption(result.booking);
             }
         } catch (error) {
-            alert(error.message || '提交失败，请稍后重试');
+            alert(error.message || '提交失敗，請稍後重試');
         } finally {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
@@ -104,7 +106,7 @@ async function initiatePayment(bookingId) {
     const btn = document.getElementById('btnPayNow');
     if (btn) {
         btn.disabled = true;
-        btn.textContent = '处理中...';
+        btn.textContent = '處理中...';
     }
     try {
         const res = await fetch(window.location.origin + '/api/payment/create-intent', {
@@ -114,7 +116,7 @@ async function initiatePayment(bookingId) {
         });
         const data = await res.json();
         if (!res.ok) {
-            alert(data.message || data.error || '支付暂不可用，请到店支付');
+            alert(data.message || data.error || '支付暫不可用，請到店支付');
             return;
         }
         // Stripe 支付：需加载 Stripe.js 并调用 confirmCardPayment(clientSecret)
@@ -125,10 +127,10 @@ async function initiatePayment(bookingId) {
             if (error) alert(error.message || '支付取消');
             else alert('支付成功！');
         } else {
-            alert('支付功能需配置 Stripe 后使用。您可先到店支付，或联系客服。');
+            alert('支付功能需配置 Stripe 後使用。您可先到店支付，或聯繫客服。');
         }
     } catch (e) {
-        alert('支付请求失败，请到店支付。');
+        alert('支付請求失敗，請到店支付。');
     } finally {
         if (btn) {
             btn.disabled = false;
