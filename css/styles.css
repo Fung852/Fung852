@@ -343,6 +343,17 @@ a {
     color: var(--text-muted);
 }
 
+.payment-section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.payment-hint {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
 /* ===== 联系我们 ===== */
 .contact {
     padding: 80px 0;

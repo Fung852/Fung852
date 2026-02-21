@@ -63,20 +63,76 @@ function initBookingForm() {
         submitBtn.disabled = true;
 
         try {
-            // 这里可以对接后端 API，目前模拟提交成功
-            await new Promise(resolve => setTimeout(resolve, 800));
+            const apiBase = window.location.origin;
+            const res = await fetch(apiBase + '/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const result = await res.json();
+            if (!res.ok) throw new Error(result.error || '提交失败');
 
             form.style.display = 'none';
             successMsg.style.display = 'block';
             successMsg.scrollIntoView({ behavior: 'smooth' });
 
-            // 控制台输出预约信息（便于调试，实际应发送到后端）
-            console.log('预约信息:', data);
+            // 可选：显示支付入口
+            if (result.booking?.id) {
+                showPaymentOption(result.booking);
+            }
         } catch (error) {
-            alert('提交失败，请稍后重试');
+            alert(error.message || '提交失败，请稍后重试');
         } finally {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }
     });
+}
+
+// 显示支付入口
+function showPaymentOption(booking) {
+    const section = document.getElementById('paymentSection');
+    const btn = document.getElementById('btnPayNow');
+    if (!section || !btn) return;
+
+    section.style.display = 'block';
+    btn.onclick = () => initiatePayment(booking.id);
+}
+
+// 发起支付（Stripe - 需在 .env 配置 STRIPE_SECRET_KEY 和前端 STRIPE_PUBLISHABLE_KEY）
+async function initiatePayment(bookingId) {
+    const btn = document.getElementById('btnPayNow');
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = '处理中...';
+    }
+    try {
+        const res = await fetch(window.location.origin + '/api/payment/create-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bookingId }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            alert(data.message || data.error || '支付暂不可用，请到店支付');
+            return;
+        }
+        // Stripe 支付：需加载 Stripe.js 并调用 confirmCardPayment(clientSecret)
+        // 配置后可使用: https://stripe.com/docs/payments/accept-a-payment
+        if (data.clientSecret && window.Stripe) {
+            const stripe = window.Stripe(window.STRIPE_PUBLISHABLE_KEY);
+            const { error } = await stripe.confirmCardPayment(data.clientSecret);
+            if (error) alert(error.message || '支付取消');
+            else alert('支付成功！');
+        } else {
+            alert('支付功能需配置 Stripe 后使用。您可先到店支付，或联系客服。');
+        }
+    } catch (e) {
+        alert('支付请求失败，请到店支付。');
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = '立即支付';
+        }
+    }
 }
