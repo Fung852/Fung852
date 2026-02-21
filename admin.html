@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理後台 - CWS 快來洗 Chill Wash Services</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loginPage" class="admin-login">
+        <div class="login-box">
+            <h1>管理後台</h1>
+            <form id="loginForm">
+                <input type="text" name="username" placeholder="使用者名稱（預設：admin）" value="admin" required>
+                <input type="password" name="password" placeholder="密碼（預設：admin123）" required>
+                <button type="submit">登入</button>
+            </form>
+            <p class="login-hint">預設帳號：admin / admin123 · 需執行 npm start 啟動後端</p>
+        </div>
+    </div>
+
+    <div id="adminPage" class="admin-page" style="display: none;">
+        <header class="admin-header">
+            <h1>工單管理</h1>
+            <div class="admin-actions">
+                <select id="filterStatus">
+                    <option value="">全部狀態</option>
+                    <option value="pending">待確認</option>
+                    <option value="confirmed">已確認</option>
+                    <option value="completed">已完成</option>
+                    <option value="cancelled">已取消</option>
+                </select>
+                <input type="date" id="filterDateFrom" placeholder="開始日期">
+                <input type="date" id="filterDateTo" placeholder="結束日期">
+                <button id="btnRefresh">重新整理</button>
+                <button id="btnLogout">登出</button>
+            </div>
+        </header>
+        <main class="admin-main">
+            <div class="bookings-table-wrap">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>客戶</th>
+                            <th>電話</th>
+                            <th>服務</th>
+                            <th>數量</th>
+                            <th>日期/時段</th>
+                            <th>地址</th>
+                            <th>狀態</th>
+                            <th>支付</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>編輯工單</h3>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>狀態</label>
+                    <select id="editStatus">
+                        <option value="pending">待確認</option>
+                        <option value="confirmed">已確認</option>
+                        <option value="completed">已完成</option>
+                        <option value="cancelled">已取消</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>指派技師</label>
+                    <input type="text" id="editAssigned" placeholder="技師姓名">
+                </div>
+                <div class="form-group">
+                    <label>支付狀態</label>
+                    <select id="editPayment">
+                        <option value="unpaid">未支付</option>
+                        <option value="paid">已支付</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="btnCloseModal">取消</button>
+                    <button type="submit" class="btn-save">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
