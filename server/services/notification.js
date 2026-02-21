@@ -62,7 +62,7 @@ async function sendBookingConfirmation(booking) {
   }
 
   // 短信通知客户 (需配置 SMS_API_KEY)
-  const smsContent = `【快來洗 Chill Wash Services】您已成功預約${serviceName}，服務日期${booking.date} ${booking.time}。我們將儘快與您確認，感謝！`;
+  const smsContent = `【CWS 快來洗】您已成功預約${serviceName}，服務日期${booking.date} ${booking.time}。我們將儘快與您確認，感謝！WhatsApp +852 61581857`;
   await sendSMS(booking.phone, smsContent);
 }
 

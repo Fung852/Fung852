@@ -73,6 +73,12 @@ a {
     color: var(--primary-dark);
 }
 
+.logo-en {
+    font-weight: 500;
+    font-size: 0.95em;
+    opacity: 0.9;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -143,11 +149,40 @@ a {
     color: var(--white);
 }
 
+.hero-tag {
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
 .hero h1 {
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.hero-en {
+    font-size: 0.6em;
+    font-weight: 400;
+    opacity: 0.95;
+    letter-spacing: 0.05em;
+}
+
+.hero-features {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.hero-desc {
+    font-size: 1rem;
+    opacity: 0.85;
+    margin-bottom: 28px;
+    font-weight: 300;
 }
 
 .hero-subtitle {
@@ -385,9 +420,19 @@ a {
     margin-bottom: 8px;
 }
 
-.contact-item p {
+.contact-item p,
+.contact-item a {
     font-weight: 600;
     color: var(--text);
+}
+
+.contact-whatsapp a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.contact-whatsapp a:hover {
+    text-decoration: underline;
 }
 
 /* ===== 页脚 ===== */
