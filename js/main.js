@@ -71,8 +71,14 @@ function initBookingForm() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             });
-            const result = await res.json();
-            if (!res.ok) throw new Error(result.error || '提交失败');
+            const text = await res.text();
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch {
+                throw new Error('伺服器回應異常，請確保已執行 npm start 啟動後端');
+            }
+            if (!res.ok) throw new Error(result.error || '提交失敗');
 
             form.style.display = 'none';
             successMsg.style.display = 'block';
@@ -114,7 +120,14 @@ async function initiatePayment(bookingId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ bookingId }),
         });
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            alert('支付服務異常，請確保已執行 npm start 啟動後端');
+            return;
+        }
         if (!res.ok) {
             alert(data.message || data.error || '支付暫不可用，請到店支付');
             return;

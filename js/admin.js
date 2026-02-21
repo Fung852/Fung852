@@ -18,7 +18,13 @@ function api(path, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...options.headers };
   if (token) headers['Authorization'] = 'Bearer ' + token;
   return fetch(url, { ...options, headers }).then(async (r) => {
-    const data = await r.json().catch(() => ({}));
+    const text = await r.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error('伺服器回應異常，請確保已執行 npm start 啟動後端');
+    }
     if (!r.ok) throw new Error(data.error || '請求失敗');
     return data;
   });
