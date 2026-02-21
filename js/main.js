@@ -89,12 +89,42 @@ function initBookingForm() {
                 showPaymentOption(result.booking);
             }
         } catch (error) {
-            alert(error.message || '提交失敗，請稍後重試');
+            const useWhatsApp = confirm(
+                '線上預約系統暫時無法連線。\n\n是否改為透過 WhatsApp 傳送預約資訊？\n（+852 6158 1857）'
+            );
+            if (useWhatsApp) {
+                submitViaWhatsApp(data);
+            } else {
+                alert(error.message || '提交失敗，請稍後重試');
+            }
         } finally {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }
     });
+}
+
+// API 失敗時改由 WhatsApp 提交
+function submitViaWhatsApp(data) {
+    const SERVICE_NAMES = { home: '家用冷氣清洗', commercial: '商用冷氣清洗', maintenance: '冷氣保養套餐' };
+    const serviceName = SERVICE_NAMES[data.service] || data.service;
+    const msg = `【CWS 快來洗 預約查詢】
+
+姓名：${data.name}
+電話：${data.phone}
+服務：${serviceName}
+數量：${data.units || 1} 台
+日期：${data.date} ${data.time}
+地址：${data.address}
+${data.notes ? '備註：' + data.notes : ''}`;
+    const url = 'https://wa.me/85261581857?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+    // 仍顯示成功區塊，提示用戶已開啟 WhatsApp
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('bookingSuccess').style.display = 'block';
+    document.getElementById('bookingSuccess').querySelector('p').textContent =
+        '已為您開啟 WhatsApp，請將預約資訊傳送給我們，我們會儘快回覆！';
+    document.getElementById('bookingSuccess').scrollIntoView({ behavior: 'smooth' });
 }
 
 // 显示支付入口
