@@ -1,0 +1,7 @@
+{
+  "install": "python3 -m pip install --upgrade pip && python3 -m pip install -r stock_backtest_template/requirements.txt",
+  "start": "echo 'Cloud agent environment ready'",
+  "env": {
+    "PYTHONUNBUFFERED": "1"
+  }
+}

@@ -22,13 +22,13 @@ stock_backtest_template/
 1. 安装依赖
 
 ```bash
-pip install -r stock_backtest_template/requirements.txt
+python3 -m pip install -r stock_backtest_template/requirements.txt
 ```
 
 2. 启动 Jupyter
 
 ```bash
-jupyter notebook
+python3 -m notebook
 ```
 
 3. 打开并运行：
@@ -49,3 +49,21 @@ jupyter notebook
 
 - 这是教学模板，不构成投资建议。
 - 历史表现不代表未来收益。
+
+## 云端代理环境（已配置）
+
+仓库根目录新增了 `.cursor/environment.json`，会在云端代理启动时自动执行：
+
+```bash
+python3 -m pip install --upgrade pip && python3 -m pip install -r stock_backtest_template/requirements.txt
+```
+
+这样可以在新会话里直接运行 Notebook，无需手动安装依赖。
+
+### 一键验证
+
+```bash
+bash scripts/verify_backtest_notebook.sh
+```
+
+验证成功后会在 `/tmp/real_stock_backtest_template.executed.ipynb` 生成执行结果。
