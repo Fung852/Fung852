@@ -1,0 +1,37 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - cursor/-bc-7569007d-3397-41ce-9cbe-1947437547f2-aadc
+    paths:
+      - "minute_data_gui.py"
+      - "minute_data_tool.py"
+      - ".github/workflows/build-windows-exe.yml"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build EXE
+        run: pyinstaller --onefile --windowed --name minute_data_gui minute_data_gui.py
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: minute_data_gui-windows-exe
+          path: dist/minute_data_gui.exe
+          if-no-files-found: error
